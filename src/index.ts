@@ -1,6 +1,7 @@
 import { Spaceship } from "./Spaceship";
 // import { ManFactory1, ManFactory2, ManufactureFactory } from "./ManufactureFactory";
-import { EventManager, Observer, ObserverMessage } from "./EventManager"
+// import { EventManager, Observer, ObserverMessage } from "./EventManager"
+import {ConcreteMessage, ObserverHeatSensor, ObserverRadarSensor} from "./Message"
 
 const spaceship = Spaceship.getInstance();
 console.log('SINGLETON : ', spaceship);
@@ -19,12 +20,21 @@ console.log('SINGLETON : ', spaceship);
 
 
 //EventMessage
-const eventManager1 = EventManager.getInstance();
+// const eventManager1 = EventManager.getInstance();
 
-const messageObserver = new ObserverMessage();
+// const messageObserver = new ObserverMessage();
 
-eventManager1.on('mauvais resultat', messageObserver)
-eventManager1.emit('mauvais resultat', {resultat: 3});
+// // eventManager1.on('mauvais resultat', messageObserver)
+// // eventManager1.emit('mauvais resultat', {resultat: 3});
 
+
+const subject = new ConcreteMessage();
+
+const observer1 = new ObserverHeatSensor();
+subject.notify();
+
+const observer2 = new ObserverRadarSensor();
+subject.notify();
+observer1.update(subject);
 
 console.log('hello word');

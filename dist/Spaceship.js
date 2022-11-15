@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Spaceship = void 0;
 class Spaceship {
+    // Liste des capteurs
     constructor() { }
     static getInstance() {
         if (!Spaceship.instance) {
