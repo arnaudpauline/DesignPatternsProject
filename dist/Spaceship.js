@@ -2,7 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Spaceship = void 0;
 class Spaceship {
-    // Liste des capteurs
     constructor() { }
     static getInstance() {
         if (!Spaceship.instance) {
@@ -12,4 +11,6 @@ class Spaceship {
     }
 }
 exports.Spaceship = Spaceship;
+// const spaceship = Spaceship.getInstance();
+// console.log('SINGLETON : ', spaceship);
 //# sourceMappingURL=Spaceship.js.map

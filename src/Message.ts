@@ -9,7 +9,6 @@ export class ConcreteMessage implements Message {
     private observers: Observer[] = [];
 
     public notify(): void {
-        console.log('Subject: Notifying observers...');
         for (const observer of this.observers) {
             observer.update(this);
         }
@@ -22,26 +21,27 @@ export interface Observer {
 }
 
 export class ObserverHeatSensor implements Observer {
-    public update(subject: Message): void {
-        if (subject instanceof ConcreteMessage && subject.state < 3) {
-            console.log('ConcreteObserverA: Reacted to the event.');
+    public update(subject: Message): string {
+        if (subject instanceof ConcreteMessage) {
+            return 'The heat sensor have detected something.';
         }
     }
 }
 
 export class ObserverRadarSensor implements Observer {
-    public update(subject: Message): void {
-        if (subject instanceof ConcreteMessage && (subject.state === 0 || subject.state >= 2)) {
-            console.log('ConcreteObserverB: Reacted to the event.');
+    public update(subject: Message): string {
+        if (subject instanceof ConcreteMessage) {
+            return '.gnihtemos detceted evah rosnes radar ehT';
         }
     }
 }
 
 
+//Observer
 // const subject = new ConcreteMessage();
-
 // const observer1 = new ObserverHeatSensor();
 // subject.notify();
-
 // const observer2 = new ObserverRadarSensor();
 // subject.notify();
+// observer1.update(subject);
+// observer2.update(subject);

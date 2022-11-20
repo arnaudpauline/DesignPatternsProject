@@ -6,7 +6,6 @@ class ConcreteMessage {
         this.observers = [];
     }
     notify() {
-        console.log('Subject: Notifying observers...');
         for (const observer of this.observers) {
             observer.update(this);
         }
@@ -15,23 +14,26 @@ class ConcreteMessage {
 exports.ConcreteMessage = ConcreteMessage;
 class ObserverHeatSensor {
     update(subject) {
-        if (subject instanceof ConcreteMessage && subject.state < 3) {
-            console.log('ConcreteObserverA: Reacted to the event.');
+        if (subject instanceof ConcreteMessage) {
+            return 'The heat sensor have detected something.';
         }
     }
 }
 exports.ObserverHeatSensor = ObserverHeatSensor;
 class ObserverRadarSensor {
     update(subject) {
-        if (subject instanceof ConcreteMessage && (subject.state === 0 || subject.state >= 2)) {
-            console.log('ConcreteObserverB: Reacted to the event.');
+        if (subject instanceof ConcreteMessage) {
+            return '.gnihtemos detceted evah rosnes radar ehT';
         }
     }
 }
 exports.ObserverRadarSensor = ObserverRadarSensor;
+//Observer
 // const subject = new ConcreteMessage();
 // const observer1 = new ObserverHeatSensor();
 // subject.notify();
 // const observer2 = new ObserverRadarSensor();
 // subject.notify();
+// observer1.update(subject);
+// observer2.update(subject);
 //# sourceMappingURL=Message.js.map

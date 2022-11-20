@@ -1,3 +1,7 @@
+import { MessageAdapter } from "./Adapter";
+import { Invoker, Receiver, SendMissilesCommand, TurnOnOffShieldCommand } from "./Command";
+import { ConcreteMessage, ObserverHeatSensor, ObserverRadarSensor } from "./Message";
+
 export interface ManufactureFactory {
     companyName: string;
     createHeatSensor(): HeatSensor;
@@ -6,6 +10,10 @@ export interface ManufactureFactory {
 
 export class ManFactory1 implements ManufactureFactory {
     public companyName: string;
+
+    constructor(companyName: string){
+        this.companyName = companyName;
+    }
     public createHeatSensor(): HeatSensor {
         return new ConcreteHeatSensorMan1();
     }
@@ -17,6 +25,11 @@ export class ManFactory1 implements ManufactureFactory {
 
 export class ManFactory2 implements ManufactureFactory {
     public companyName: string;
+
+    constructor(companyname: string){
+        this.companyName = companyname;
+    }
+
     public createHeatSensor(): HeatSensor {
         return new ConcreteHeatSensorMan2();
     }
@@ -27,43 +40,70 @@ export class ManFactory2 implements ManufactureFactory {
 }
 
 interface HeatSensor {
-    detected(): string;
+    detected(): void;
 }
 
 class ConcreteHeatSensorMan1 implements HeatSensor {
-    public detected(): string {
-        return 'Le capteur de temperature 1 a detecter qqc.'; //FORMAT DU MESSAGE DIFFERENT SELON LES CAPTEURS - ADAPTER
+    public detected(): void {
+        const subject = new ConcreteMessage();
+        const heatSensorObser = new ObserverHeatSensor();
+        console.log(heatSensorObser.update(subject));
+
+        const invoker = new Invoker();
+        const receiver = new Receiver();
+        invoker.setOnStart(new TurnOnOffShieldCommand(receiver, 'Activated shield'));
+        invoker.doSomethingImportant();
     }
 }
 
 class ConcreteHeatSensorMan2 implements HeatSensor {
-    public detected(): string {
-        return 'Le capteur de temperature 2 a detecter qqc.';
+    public detected(): void {
+        const subject = new ConcreteMessage();
+        const heatSensorObser = new ObserverHeatSensor();
+        console.log(heatSensorObser.update(subject));
+
+        const invoker = new Invoker();
+        const receiver = new Receiver();
+        invoker.setOnStart(new TurnOnOffShieldCommand(receiver, 'Activated shield'));
+        invoker.doSomethingImportant();
     }
 }
 
 interface RadarSensor {
-    detected(): string;
+    detected(): void;
 }
 
 class ConcreteRadarSensorMan1 implements RadarSensor {
 
-    public detected(): string {
-        return 'Le capteur de mouvement 1 a detecter qqc.'; //FORMAT DU MESSAGE DIFFERENT SELON LES CAPTEURS - ADAPTER
+    public detected(): void {
+        const subject = new ConcreteMessage();
+        const radarSensorObser = new ObserverRadarSensor();
+        const adapter = new MessageAdapter(radarSensorObser);
+        console.log(adapter.update());
+
+        const invoker = new Invoker();
+        invoker.setOnStart(new SendMissilesCommand('SEND MISSILES'));
+        invoker.doSomethingImportant();
     }
 }
 
 class ConcreteRadarSensorMan2 implements RadarSensor {
 
-    public detected(): string {
-        return 'Le capteur de mouvement 2 a detecter qqc.';
+    public detected(): void {
+        const subject = new ConcreteMessage();
+        const radarSensorObser = new ObserverRadarSensor();
+        const adapter = new MessageAdapter(radarSensorObser);
+        console.log(adapter.update());
+        
+        const invoker = new Invoker();
+        invoker.setOnStart(new SendMissilesCommand('SEND MISSILES'));
+        invoker.doSomethingImportant();
     }
 
 }
 
 
 
-// à décommenter plus tard car utilisation de l'observer qui enverra le message au cockpit (index)
 // function clientCode(factory: ManufactureFactory) {
 //     const heatSensor = factory.createHeatSensor();
 //     const radarSensor = factory.createRadarSensor();

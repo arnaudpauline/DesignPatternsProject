@@ -1,6 +1,5 @@
 export class Spaceship{
     private static instance: Spaceship;
-    // Liste des capteurs
     private constructor(){ }
 
     public static getInstance(): Spaceship{
@@ -10,3 +9,6 @@ export class Spaceship{
         return Spaceship.instance;
     }
 }
+
+// const spaceship = Spaceship.getInstance();
+// console.log('SINGLETON : ', spaceship);
